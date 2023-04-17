@@ -30,10 +30,24 @@ subtitle.appendChild(p);
 
 })();
 
+
 let p = document.createElement('p');
 let box = document.createElement ('input');
 box.setAttribute('type', 'checkbox');
 p.innerHTML = 'I promise to answer myself without help from anyone';
 let check = document.querySelector('.checkbox');
 check.append(box,p);
-
+let but = document.createElement('button');
+but.innerHTML = 'proceed';
+let button = document.querySelector('.button');
+button.appendChild(but);
+but.addEventListener('click', function nextPage(){
+   /* if (box.checked === true) {
+       let welcome = document.querySelector('.welcome');
+        document.welcome.replace('ciao');
+   
+}
+}
+)
+()
+ */
