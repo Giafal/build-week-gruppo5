@@ -1,4 +1,4 @@
-
+{
 let h2 = document.createElement('h2');
 h2.innerHTML = 'Welcome to <b>your exam</b>';
 let title = document.querySelector('.title');
@@ -11,6 +11,7 @@ h3.innerHTML = 'Instructions';
 let subtitle = document.querySelector('.subtitle');
 subtitle.appendChild(h3);
 subtitle.appendChild(p);
+}
 
 (function makeList() {
     let ul = document.createElement('ul');
@@ -28,3 +29,11 @@ subtitle.appendChild(p);
     }
 
 })();
+
+let p = document.createElement('p');
+let box = document.createElement ('input');
+box.setAttribute('type', 'checkbox');
+p.innerHTML = 'I promise to answer myself without help from anyone';
+let check = document.querySelector('.checkbox');
+check.append(box,p);
+
