@@ -12,5 +12,19 @@ let subtitle = document.querySelector('#subtitle');
 subtitle.appendChild(h3);
 subtitle.appendChild(p);
 
-let ul = document.createElement('ul');
-let li1 = document.createElement('li1');
+(function makeList() {
+    let ul = document.createElement('ul');
+    ul.setAttribute('id', 'list');
+
+    arr = ['each question is timed and can onyl be answered once', 'changing browser tab or opening other windows will invalidate the question', 'this exam will take approx. 0-5 minutes.']
+
+    document.querySelector('#myList').appendChild(ul);
+    arr.forEach(printList);
+    function printList (element, index, arr) {
+        let li = document.createElement('li');
+        li.setAttribute('class', 'li-item');
+        ul.appendChild(li);
+        li.innerHTML = li.innerHTML + element;
+    }
+
+})();
