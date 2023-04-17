@@ -24,7 +24,7 @@ subtitle.appendChild(p);
         let li = document.createElement('li');
         li.setAttribute('class', 'li-item');
         ul.appendChild(li);
-        li.innerHTML = li.innerHTML + element;
+        li.innerHTML = element;
     }
 
 })();
