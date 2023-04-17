@@ -41,8 +41,8 @@ let but = document.createElement('button');
 but.innerHTML = 'proceed';
 let button = document.querySelector('.button');
 button.appendChild(but);
-but.addEventListener('click', function nextPage(){
-   /* if (box.checked === true) {
+/*but.addEventListener('click', function nextPage(){
+    if (box.checked === true) {
        let welcome = document.querySelector('.welcome');
         document.welcome.replace('ciao');
    
