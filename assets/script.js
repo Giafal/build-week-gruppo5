@@ -3,7 +3,7 @@
 
 {
 let h2 = document.createElement('h2');
-h2.innerHTML = 'Welcome to <br>your exam';
+h2.innerHTML = 'Welcome to <br><span>your exam</span>';
 let title = document.querySelector('.title');
 title.appendChild(h2);
 
@@ -37,7 +37,7 @@ subtitle.appendChild(p);
 let p = document.createElement('p');
 let box = document.createElement ('input');
 box.setAttribute('type', 'checkbox','class', 'cbox');
-p.innerHTML = 'I promise to answer myself without help from anyone';
+p.innerHTML = '<span>I promise to answer myself without help from anyone</span>';
 let check = document.querySelector('.checkbox');
 check.append(box);
 let pcheck = document.querySelector('.pcheck');
