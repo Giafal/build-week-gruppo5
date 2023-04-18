@@ -69,22 +69,13 @@ but.addEventListener('click', function nextPage(){
     let template = document.getElementsByTagName('template')[0];
     let clone = template.content.cloneNode(true);
     let qea = document.querySelector('.qea');
-   
-    let answers = []
-    
-    
-     
-    
-    
-    console.log(answers);
-    
-    
     clone.querySelector('.question').textContent = questions[0].question;
     clone.querySelector('.answer').textContent = questions[0].correct_answer;
 
+    let array1 = [];
+    array1.push(questions.correct_answers);
+    console.log(array1);
     
-    
-    qea.appendChild(clone);
 })
 
     
