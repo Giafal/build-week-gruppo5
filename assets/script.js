@@ -39,13 +39,11 @@ let box = document.createElement ('input');
 box.setAttribute('type', 'checkbox');
 p.innerHTML = 'I promise to answer myself without help from anyone';
 let check = document.querySelector('.checkbox');
-<<<<<<< HEAD
 check.append(box);
 let pcheck = document.querySelector('.pcheck');
-=======
 check.setAttribute('class', 'cbox');
-check.append(box,p);
->>>>>>> 0c525383ae407952b3518726a2abb8d9a00e9532
+check.append(box);
+pcheck.append(p);
 let but = document.createElement('button');
 but.innerHTML = 'proceed';
 let button = document.querySelector('.button');
@@ -60,7 +58,7 @@ but.addEventListener('click', function nextPage(){
     })
 
 // Benchmark Page
-    
+
       fetch('https://opentdb.com/api.php?amount=10&category=18&difficulty=easy')
      .then(res => res.json())
     .then(res => {
