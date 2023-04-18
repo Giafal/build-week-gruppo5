@@ -3,7 +3,7 @@
 
 {
 let h2 = document.createElement('h2');
-h2.innerHTML = 'Welcome to <b>your exam</b>';
+h2.innerHTML = 'Welcome to <br>your exam</br>';
 let title = document.querySelector('.title');
 title.appendChild(h2);
 
