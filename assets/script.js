@@ -20,7 +20,7 @@ subtitle.appendChild(p);
     let ul = document.createElement('ul');
     ul.setAttribute('id', 'list');
 
-    arr = ['each question is timed and can onyl be answered once', 'changing browser tab or opening other windows will invalidate the question', 'this exam will take approx. 0-5 minutes.']
+    arr = ['Each question is <span>timed</span> and can onyl be <span>answered once</span>.', 'Changing browser tab or opening other windows will <span>invalidate the question</span>.', 'This exam will take approx.<span>0-5 minutes</span>.']
 
     document.querySelector('.myList').appendChild(ul);
     arr.forEach(printList);
@@ -60,7 +60,7 @@ but.addEventListener('click', function nextPage(){
 // Benchmark Page
 
       fetch('https://opentdb.com/api.php?amount=10&category=18&difficulty=easy')
-     .then(res => res.json())
+    .then(res => res.json())
     .then(res => {
         questions = res.results
         questions.sort((a,b) => Math.floor(0.5-Math.random()));         
@@ -70,9 +70,20 @@ but.addEventListener('click', function nextPage(){
     let clone = template.content.cloneNode(true);
     let qea = document.querySelector('.qea');
    
-
+    let answers = []
+    
+    
+     
+    
+    
+    console.log(answers);
+    
+    
     clone.querySelector('.question').textContent = questions[0].question;
     clone.querySelector('.answer').textContent = questions[0].correct_answer;
+
+    
+    
     qea.appendChild(clone);
 })
 
