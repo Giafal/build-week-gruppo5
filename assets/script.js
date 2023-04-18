@@ -36,12 +36,12 @@ subtitle.appendChild(p);
 
 let p = document.createElement('p');
 let box = document.createElement ('input');
-box.setAttribute('type', 'checkbox');
+box.setAttribute('type', 'checkbox','class', 'cbox');
 p.innerHTML = 'I promise to answer myself without help from anyone';
 let check = document.querySelector('.checkbox');
 check.append(box);
 let pcheck = document.querySelector('.pcheck');
-check.setAttribute('class', 'cbox');
+check.setAttribute('class', 'pbox');
 check.append(box);
 pcheck.append(p);
 let but = document.createElement('button');
