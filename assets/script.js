@@ -1,3 +1,6 @@
+
+//Welcome Page
+
 {
 let h2 = document.createElement('h2');
 h2.innerHTML = 'Welcome to <b>your exam</b>';
@@ -41,13 +44,14 @@ let but = document.createElement('button');
 but.innerHTML = 'proceed';
 let button = document.querySelector('.button');
 button.appendChild(but);
-/*but.addEventListener('click', function nextPage(){
-    if (box.checked === true) {
+but.addEventListener('click', function nextPage(){
+    if (box.checked == true) {
        let welcome = document.querySelector('.welcome');
-        document.welcome.replace('ciao');
-   
-}
-}
-)
-()
- */
+       let benchmark = document.querySelector('.benchmark');
+       welcome.style.display = 'none';
+       benchmark.style.display = 'block';
+        }
+    })()
+
+// Benchmark Page
+
