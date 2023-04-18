@@ -1,6 +1,7 @@
 /* background pagine */
 
 .container {
+    font-family:'Inter', sans-serif;
     background-image: url('img/bg.jpg');
     background-repeat: no-repeat;
     background-size: cover;
@@ -9,8 +10,13 @@
     width: 100vw;
 }
 
-#logo {
-    width: 250px;
+.welcome{
+    margin-left: 100px;
+    color: white;
+}
+
+#logo{
+    width: 180px;
     height: 50px;
     padding-left: 100px;
     margin-bottom: 100px;
@@ -18,30 +24,21 @@
 }
 
 .title{
-    /* font-family: ;*/
+    font-family:'Outfit',sans-serif;
     font-size: 60px;
-    color: white;
     margin-bottom: 50px;
-    
-   /* font-weight: bold; non so come si fa a prendere la parte finale del testo*/
 }
 
-
 h3{
-color:#D20094;
-font-size: 30px;
-margin-bottom: 15px;
+    color:#D20094;
+    font-size: 30px;
+    margin-bottom: 15px;
+    font-weight: bolder;
 }
 
 p{
     line-height: 20px;
     margin-bottom: 50px;
-
-}
-
-.welcome{
-    margin-left: 100px;
-    color: white;
 }
 
 ul{
@@ -49,20 +46,22 @@ ul{
     margin-bottom: 110px;
     line-height: 25px;
 }
+
+span{
+    font-weight: bolder;
+}
 .pcheck{
     margin-left: 15px; 
 }
 
-.cbox{
-    opacity: 0;
-    border: 1px solid white;
-    margin-left: 100px;
-
+.pbox{
+    border: 2px solid white;
 }
+
 button{
     margin-left: 180px;
     padding: 20px 60px;
-    font-size: 30px;
+    font-size: 27px;
     text-transform: uppercase;
     font-weight: bolder;
     background-color: #00ffff;
@@ -71,9 +70,7 @@ button{
 
 .fwd{
     display: flex;
-    
 }
-
 
 .benchmark {
     display: none;
