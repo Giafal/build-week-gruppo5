@@ -63,7 +63,7 @@ but.addEventListener('click', function nextPage(){
     .then(res => res.json())
     .then(res => {
         questions = res.results
-        questions.sort((a,b) => Math.floor(0.5-Math.random()));         
+        questions.sort((a,b) => Math.floor(0.5-Math.random()));        
     console.log(res); 
     
     let template = document.getElementsByTagName('template')[0];
@@ -71,12 +71,21 @@ but.addEventListener('click', function nextPage(){
     let qea = document.querySelector('.qea');
     clone.querySelector('.question').textContent = questions[0].question;
     clone.querySelector('.answer').textContent = questions[0].correct_answer;
-
-    let array1 = [];
-    array1.push(questions.correct_answers);
-    console.log(array1);
-    
+    qea.appendChild(clone);
 })
+
+let n = [1,2,3,4]
+function shuffle(array) {
+    let newArr = [];
+    let length = array.length;
+    for (let i=0; i<length; i++) {
+    let rand = Math.floor(Math.random()*array.length);
+    newArr.push(array[rand]);
+    array.splice(rand,1);
+    }
+    return newArr;
+}
+    console.log(shuffle(n));
 
     
 
