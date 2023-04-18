@@ -48,7 +48,16 @@ p{
     opacity: 0;
     border: 1px solid white;
     margin-left: 100px;
+
 }
+.button{
+    margin-left: 500px;
+}
+.fwd{
+    display: flex;
+    
+}
+
 
 .benchmark {
     display: none;
