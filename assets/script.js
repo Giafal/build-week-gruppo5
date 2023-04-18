@@ -54,4 +54,11 @@ but.addEventListener('click', function nextPage(){
     })()
 
 // Benchmark Page
+async function prendiDomande(){
+    let domande = await fetch('https://opentdb.com/api.php?amount=10&category=18&difficulty=easy').then(res => res.json());
+    this.domande.sort((a,b) => 0.5-Math.random());
+
+}
+
+prendiDomande();
 
