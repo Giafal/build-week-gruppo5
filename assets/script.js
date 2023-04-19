@@ -87,7 +87,13 @@ fetch("https://opentdb.com/api.php?amount=10&category=18&difficulty=easy")
       randQuestions[0].correct_answer
     );
     console.log(answers);
-    clone.querySelector(".answer").innerHTML = randQuestions[0].correct_answer;
+    const buttons = document.querySelector(".buttons");
+    answers.forEach((answer) => {
+      let button = document.createElement("button");
+      button.innerHTML = answer;
+      qea.appendChild(button);
+    });
+    // clone.querySelector(".answer").innerHTML = buttons;
     qea.appendChild(clone);
   });
 
