@@ -11,12 +11,14 @@ timer.append(upSec);
 timer.append(clock);
 timer.append(remain);
 
-let seconds = 30;
+
 but.addEventListener("click", function countdown() {
-        let countdown = setInterval(function() {
-        if (seconds < 0) {
-            seconds = 30;
-            clearInterval(countdown);
+    let seconds = 5;       
+    let countdown = setInterval(function() {
+            
+            if (seconds < 0) {
+            seconds = 5;
+            clone.style.display = 'none';
         }else{
             clock.textContent = seconds;
         } seconds-- },1000)
