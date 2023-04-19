@@ -12,13 +12,13 @@ timer.append(clock);
 timer.append(remain);
 
 let seconds = 30;
-let countdown = setInterval(function countdown() {
-            if (seconds < 0){
+but.addEventListener("click", function countdown() {
+        let countdown = setInterval(function() {
+        if (seconds < 0) {
+            seconds = 30;
             clearInterval(countdown);
-        } else{
-            document.querySelector('.clock').innerHTML =  seconds;
-        }
-    seconds -= 1;
-
-},1000);
+        }else{
+            clock.textContent = seconds;
+        } seconds-- },1000)
+})
 
