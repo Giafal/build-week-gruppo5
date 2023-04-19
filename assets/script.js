@@ -67,24 +67,24 @@ fetch("https://opentdb.com/api.php?amount=10&category=18&difficulty=easy")
   .then((res) => {
     let questions = res.results;
 
-    // function shuffle(array) {
-    //   let newArr = [];
-    //   let length = array.length;
-    //   for (let i = 0; i < length; i++) {
-    //     let rand = Math.floor(Math.random() * array.length);
-    //     newArr.push(array[rand]);
-    //     array.splice(rand, 1);
-    //   }
-    //   return newArr;
-    // }
+    function shuffle(array) {
+      let newArr = [];
+      let length = array.length;
+      for (let i = 0; i < length; i++) {
+        let rand = Math.floor(Math.random() * array.length);
+        newArr.push(array[rand]);
+        array.splice(rand, 1);
+      }
+      return newArr;
+    }
 
     console.log(questions);
 
     let template = document.getElementsByTagName("template")[0];
     let clone = template.content.cloneNode(true);
     let qea = document.querySelector(".qea");
-    clone.querySelector(".question").textContent = questions[0].question;
-    clone.querySelector(".answer").textContent = questions[0].correct_answer;
+    clone.querySelector(".question").innerHTML = questions[0].question;
+    clone.querySelector(".answer").innerHTML = questions[0].correct_answer;
     qea.appendChild(clone);
   });
 
