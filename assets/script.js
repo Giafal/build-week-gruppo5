@@ -94,8 +94,40 @@ fetch("https://opentdb.com/api.php?amount=10&category=18&difficulty=easy")
       button.innerHTML = answer;
       button.setAttribute("class", "answer");
       buttons.appendChild(button);
-    });
-  });
+      });
+      //Timer
+    let timer = document.querySelector('.timer');
+    let upSec = document.createElement('p');
+    let clock = document.createElement('div');
+    let remain = document.createElement('p');
+    upSec.setAttribute('class', 'upSec');
+    clock.setAttribute('class', 'clock');
+    remain.setAttribute('class','remain');
+    upSec.textContent = 'SECONDS';
+    remain.textContent = 'remaining';
+    timer.append(upSec);
+    timer.append(clock);
+    timer.append(remain);
+    but.addEventListener("click", function countdown() {
+      let seconds = 5;       
+      let countdown = setInterval(function() {
+              
+              if (seconds < 0) {
+              seconds = 5 + 1;
+              qea.style.display = 'none';
+          }else{
+              clock.textContent = seconds;
+          } seconds-- },1000)
+  })
+  //indice di domande
+  let counter = document.querySelector('.counter');
+  let pCounter = document.createElement('p');
+  pCounter.setAttribute('class', 'pcounter');
+  pCounter.innerHTML = 'QUESTION 1/10';
+  counter.append(pCounter);
+  
+
+});
 
 /* let n = [1, 2, 3, 4];
 function shuffle(array) {
