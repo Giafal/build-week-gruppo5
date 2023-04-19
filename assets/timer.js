@@ -11,14 +11,8 @@ timer.append(upSec);
 timer.append(clock);
 timer.append(remain);
 
-let seconds = 10;
-let countdown = setInterval(function countdown(str) {
-    if( str === 'easy'){
-        seconds = 30;}
-        else if( str === 'medium'){
-            seconds = 60;}
-        else if( str === 'hard'){
-                seconds = 120;}
+let seconds = 30;
+let countdown = setInterval(function countdown() {
             if (seconds < 0){
             clearInterval(countdown);
         } else{
@@ -28,4 +22,3 @@ let countdown = setInterval(function countdown(str) {
 
 },1000);
 
-countdown('easy');

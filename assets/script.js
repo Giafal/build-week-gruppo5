@@ -175,8 +175,8 @@ const questions = [
 
     console.log(shuffle(questions));
 
-    let template = document.getElementsByTagName("template")[0];
-    let clone = template.content.cloneNode(true);
+    let temp = document.getElementsByTagName("template")[0];
+    let clone = temp.content.cloneNode(true);
     let qea = document.querySelector(".qea");
     clone.querySelector(".question").innerHTML = questions.question;
     clone.querySelector(".answer").innerHTML = questions.correct_answer;
