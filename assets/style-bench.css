@@ -18,3 +18,20 @@
     border-radius: 40px;
 
 }
+
+.timer{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-left: 1700px;
+}
+
+.timer p{
+    align-items: center;
+    color: white;
+}
+
+.clock{
+    color: white;
+    font-size: 60px;
+}
