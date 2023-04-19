@@ -83,6 +83,7 @@ fetch("https://opentdb.com/api.php?amount=10&category=18&difficulty=easy")
     let clone = temp.content.cloneNode(true);
     let qea = document.querySelector(".qea");
     clone.querySelector(".question").innerHTML = randQuestions[0].question;
+    qea.appendChild(clone);
     let answers = randQuestions[0].incorrect_answers.concat(
       randQuestions[0].correct_answer
     );
@@ -93,8 +94,6 @@ fetch("https://opentdb.com/api.php?amount=10&category=18&difficulty=easy")
       button.innerHTML = answer;
       qea.appendChild(button);
     });
-    // clone.querySelector(".answer").innerHTML = buttons;
-    qea.appendChild(clone);
   });
 
 /* let n = [1, 2, 3, 4];
