@@ -83,6 +83,10 @@ fetch("https://opentdb.com/api.php?amount=10&category=18&difficulty=easy")
     let clone = temp.content.cloneNode(true);
     let qea = document.querySelector(".qea");
     clone.querySelector(".question").innerHTML = randQuestions[0].question;
+    let answers = randQuestions[0].incorrect_answers.concat(
+      randQuestions[0].correct_answer
+    );
+    console.log(answers);
     clone.querySelector(".answer").innerHTML = randQuestions[0].correct_answer;
     qea.appendChild(clone);
   });
