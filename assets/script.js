@@ -62,36 +62,32 @@ but.addEventListener("click", function nextPage() {
 
 // Benchmark Page
 fetch("https://opentdb.com/api.php?amount=10&category=18&difficulty=easy")
-.then(res => res.json())
-.then(res => {
+  .then((res) => res.json())
+  .then((res) => {
+    questions = res.results;
 
-  questions = res.results;
-  
-  
-  function shuffle(array) {
-    let newArr = [];
-    let length = array.length;
-    for (let i = 0; i < length; i++) {
+    function shuffle(array) {
+      let newArr = [];
+      let length = array.length;
+      for (let i = 0; i < length; i++) {
         let rand = Math.floor(Math.random() * array.length);
         newArr.push(array[rand]);
         array.splice(rand, 1);
       }
       return newArr;
     }
-    
-    console.log(shuffle(questions));
-    
+
+    const randQuestions = shuffle(questions);
+
     let temp = document.getElementsByTagName("template")[0];
     let clone = temp.content.cloneNode(true);
     let qea = document.querySelector(".qea");
-    clone.querySelector(".question").innerHTML = questions[0].question;
-    clone.querySelector(".answer").innerHTML = questions[0].correct_answer;
+    clone.querySelector(".question").innerHTML = randQuestions[0].question;
+    clone.querySelector(".answer").innerHTML = randQuestions[0].correct_answer;
     qea.appendChild(clone);
-    ;
-  })
-  
+  });
 
-   /* let n = [1, 2, 3, 4];
+/* let n = [1, 2, 3, 4];
 function shuffle(array) {
   let newArr = [];
   let length = array.length;
