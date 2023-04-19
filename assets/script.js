@@ -92,6 +92,7 @@ fetch("https://opentdb.com/api.php?amount=10&category=18&difficulty=easy")
     answers.forEach((answer) => {
       let button = document.createElement("button");
       button.innerHTML = answer;
+      button.setAttribute("class", "answer");
       qea.appendChild(button);
     });
   });
