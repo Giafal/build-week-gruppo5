@@ -65,20 +65,20 @@ but.addEventListener("click", function nextPage() {
 fetch("https://opentdb.com/api.php?amount=10&category=18&difficulty=easy")
   .then((res) => res.json())
   .then((res) => {
-    questions = res.results;
+    let questions = res.results;
 
-    function shuffle(questions) {
-      let newArr = [];
-      let length = questions.length;
-      for (let i = 0; i < length; i++) {
-        let rand = Math.floor(Math.random() * questions.length);
-        newArr.push(questions[rand]);
-        questions.splice(rand, 1);
-      }
-      return newArr;
-    }
+    // function shuffle(array) {
+    //   let newArr = [];
+    //   let length = array.length;
+    //   for (let i = 0; i < length; i++) {
+    //     let rand = Math.floor(Math.random() * array.length);
+    //     newArr.push(array[rand]);
+    //     array.splice(rand, 1);
+    //   }
+    //   return newArr;
+    // }
 
-    console.log(shuffle(questions));
+    console.log(questions);
 
     let template = document.getElementsByTagName("template")[0];
     let clone = template.content.cloneNode(true);
