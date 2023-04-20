@@ -77,6 +77,13 @@ async function init() {
   });
 }
 
+let counter = document.querySelector(".counter");
+let pCounter = document.createElement("p");
+pCounter.setAttribute("class", "pcounter");
+
+  
+counter.append(pCounter);
+
 function createButtons() {
   domandaCorrente = domande[contatore];
   let { type, difficulty, question, correct_answer, incorrect_answers } =
@@ -87,19 +94,27 @@ function createButtons() {
   titolo.textContent = question;
   let risposteCompleto = incorrect_answers;
   risposteCompleto.push(correct_answer);
-
+  
   if (type != "boolean") {
     risposteCompleto = shuffle(risposteCompleto);
   }
 
   for (let risposta of risposteCompleto) {
     let button = document.createElement("button");
-    button.textContent = risposta;
     button.classList.add("button-answer");
+    button.textContent = risposta;
+    button.addEventListener('mousedown', function (){
+      button.classList.add('pressed');
+    });
+    button.addEventListener("mouseup", function () {
+      button.classList.remove('pressed');
+    });
+    button.addEventListener('mouseleave',function(){
+      button.classList.remove('pressed');
+    })
     button.addEventListener("click", function () {
-      if (domande.length > contatore) {
+      if (contatore < domande.length) {
         contatore++;
-
         if (incorrect_answers.includes(risposta)) {
           risposteSbagliate.push(domandaCorrente);
         }
@@ -109,6 +124,7 @@ function createButtons() {
     });
     bottoni.append(button);
   }
+  pCounter.innerHTML= 'question '+ (contatore + 1) + '/10';
 }
 
 function shuffle(array) {
@@ -149,11 +165,6 @@ init();
 //   }, 1000);
 // });
 //indice di domande
-let counter = document.querySelector(".counter");
-let pCounter = document.createElement("p");
-pCounter.setAttribute("class", "pcounter");
-pCounter.innerHTML = "QUESTION 1/10";
-counter.append(pCounter);
 
 /* let n = [1, 2, 3, 4];
 function shuffle(array) {
