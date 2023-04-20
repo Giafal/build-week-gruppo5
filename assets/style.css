@@ -8,11 +8,11 @@
     background-position: center center;
     height: 100vh;
     width: 100vw;
+    color: white;
 }
 
 .welcome{
     margin-left: 100px;
-    color: white;
 }
 
 #logo{
@@ -78,5 +78,4 @@ span{
 
 .counter{
     text-align: center;
-    color: white;
 }
