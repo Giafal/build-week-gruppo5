@@ -58,7 +58,7 @@ span {
   border: 2px solid white;
 }
 
-.button button{
+.button button {
   margin-left: 180px;
   padding: 20px 60px;
   font-size: 27px;
@@ -66,6 +66,10 @@ span {
   font-weight: bolder;
   background-color: #00ffff;
   box-shadow: 0 0 25px #00ffff;
+}
+
+.button:hover {
+  box-shadow: 0 0 50px #00ffff;
 }
 
 .fwd {
