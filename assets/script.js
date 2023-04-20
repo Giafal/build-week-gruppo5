@@ -38,7 +38,7 @@
 
 let p = document.createElement("p");
 let box = document.createElement("input");
-box.setAttribute("type", "checkbox","id", "btn", "class", "cbox");
+box.setAttribute("type", "checkbox", "id", "btn", "class", "cbox");
 p.innerHTML =
   "<span>I promise to answer myself without help from anyone</span>";
 let check = document.querySelector(".checkbox");
@@ -61,6 +61,7 @@ but.addEventListener("click", function nextPage() {
 });
 
 // Benchmark Page
+let indexOfQuestion = 0;
 fetch("https://opentdb.com/api.php?amount=10&category=18&difficulty=easy")
   .then((res) => res.json())
   .then((res) => {
@@ -82,52 +83,57 @@ fetch("https://opentdb.com/api.php?amount=10&category=18&difficulty=easy")
     let temp = document.getElementsByTagName("template")[0];
     let clone = temp.content.cloneNode(true);
     let qea = document.querySelector(".qea");
-    clone.querySelector(".question").innerHTML = randQuestions[0].question;
+    const question = clone.querySelector(".question");
+    question.innerHTML = randQuestions[0].question;
     qea.appendChild(clone);
-    let answers = randQuestions[0].incorrect_answers.concat(
-      randQuestions[0].correct_answer
+    let answers = randQuestions[indexOfQuestion].incorrect_answers.concat(
+      randQuestions[indexOfQuestion].correct_answer
     );
+    const test = () => {
+      indexOfQuestion++;
+      question.innerHTML = randQuestions[indexOfQuestion + 1].question;
+    };
     console.log(answers);
     const buttons = document.querySelector(".buttons");
     answers.forEach((answer) => {
       let button = document.createElement("button");
+      button.addEventListener("click", test);
       button.innerHTML = answer;
       button.setAttribute("class", "answer");
       buttons.appendChild(button);
-      });
-      //Timer
-    let timer = document.querySelector('.timer');
-    let upSec = document.createElement('p');
-    let clock = document.createElement('div');
-    let remain = document.createElement('p');
-    upSec.setAttribute('class', 'upSec');
-    clock.setAttribute('class', 'clock');
-    remain.setAttribute('class','remain');
-    upSec.textContent = 'SECONDS';
-    remain.textContent = 'remaining';
+    });
+    //Timer
+    let timer = document.querySelector(".timer");
+    let upSec = document.createElement("p");
+    let clock = document.createElement("div");
+    let remain = document.createElement("p");
+    upSec.setAttribute("class", "upSec");
+    clock.setAttribute("class", "clock");
+    remain.setAttribute("class", "remain");
+    upSec.textContent = "SECONDS";
+    remain.textContent = "remaining";
     timer.append(upSec);
     timer.append(clock);
     timer.append(remain);
     but.addEventListener("click", function countdown() {
-      let seconds = 5;       
-      let countdown = setInterval(function() {
-              
-              if (seconds < 0) {
-              seconds = 5 + 1;
-              qea.style.display = 'none';
-          }else{
-              clock.textContent = seconds;
-          } seconds-- },1000)
-  })
-  //indice di domande
-  let counter = document.querySelector('.counter');
-  let pCounter = document.createElement('p');
-  pCounter.setAttribute('class', 'pcounter');
-  pCounter.innerHTML = 'QUESTION 1/10';
-  counter.append(pCounter);
-  
-
-});
+      let seconds = 5;
+      let countdown = setInterval(function () {
+        if (seconds < 0) {
+          seconds = 5 + 1;
+          qea.style.display = "none";
+        } else {
+          clock.textContent = seconds;
+        }
+        seconds--;
+      }, 1000);
+    });
+    //indice di domande
+    let counter = document.querySelector(".counter");
+    let pCounter = document.createElement("p");
+    pCounter.setAttribute("class", "pcounter");
+    pCounter.innerHTML = "QUESTION 1/10";
+    counter.append(pCounter);
+  });
 
 /* let n = [1, 2, 3, 4];
 function shuffle(array) {
