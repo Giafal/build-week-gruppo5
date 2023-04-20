@@ -55,85 +55,105 @@ but.addEventListener("click", function nextPage() {
   if (box.checked == true) {
     let welcome = document.querySelector(".welcome");
     let benchmark = document.querySelector(".benchmark");
-    welcome.style.display = "none";
+    welcome.innerHTML = "";
     benchmark.style.display = "block";
   }
 });
 
 // Benchmark Page
-let indexOfQuestion = 0;
-fetch("https://opentdb.com/api.php?amount=10&category=18&difficulty=easy")
-  .then((res) => res.json())
-  .then((res) => {
-    questions = res.results;
+let contatore = 0;
+let domande;
+let domandaCorrente;
+let risposteSbagliate = [];
 
-    function shuffle(array) {
-      let newArr = [];
-      let length = array.length;
-      for (let i = 0; i < length; i++) {
-        let rand = Math.floor(Math.random() * array.length);
-        newArr.push(array[rand]);
-        array.splice(rand, 1);
-      }
-      return newArr;
-    }
+async function init() {
+  let apiURL =
+    "https://opentdb.com/api.php?amount=10&category=18&difficulty=easy";
+  domande = await fetch(apiURL).then((res) => res.json());
+  domande = shuffle(domande.results);
 
-    const randQuestions = shuffle(questions);
-
-    let temp = document.getElementsByTagName("template")[0];
-    let clone = temp.content.cloneNode(true);
-    let qea = document.querySelector(".qea");
-    const question = clone.querySelector(".question");
-    question.innerHTML = randQuestions[0].question;
-    qea.appendChild(clone);
-    let answers = randQuestions[indexOfQuestion].incorrect_answers.concat(
-      randQuestions[indexOfQuestion].correct_answer
-    );
-    const test = () => {
-      indexOfQuestion++;
-      question.innerHTML = randQuestions[indexOfQuestion + 1].question;
-    };
-    console.log(answers);
-    const buttons = document.querySelector(".buttons");
-    answers.forEach((answer) => {
-      let button = document.createElement("button");
-      button.addEventListener("click", test);
-      button.innerHTML = answer;
-      button.setAttribute("class", "answer");
-      buttons.appendChild(button);
-    });
-    //Timer
-    let timer = document.querySelector(".timer");
-    let upSec = document.createElement("p");
-    let clock = document.createElement("div");
-    let remain = document.createElement("p");
-    upSec.setAttribute("class", "upSec");
-    clock.setAttribute("class", "clock");
-    remain.setAttribute("class", "remain");
-    upSec.textContent = "SECONDS";
-    remain.textContent = "remaining";
-    timer.append(upSec);
-    timer.append(clock);
-    timer.append(remain);
-    but.addEventListener("click", function countdown() {
-      let seconds = 5;
-      let countdown = setInterval(function () {
-        if (seconds < 0) {
-          seconds = 5 + 1;
-          qea.style.display = "none";
-        } else {
-          clock.textContent = seconds;
-        }
-        seconds--;
-      }, 1000);
-    });
-    //indice di domande
-    let counter = document.querySelector(".counter");
-    let pCounter = document.createElement("p");
-    pCounter.setAttribute("class", "pcounter");
-    pCounter.innerHTML = "QUESTION 1/10";
-    counter.append(pCounter);
+  but.addEventListener("click", function () {
+    createButtons();
   });
+}
+
+function createButtons() {
+  domandaCorrente = domande[contatore];
+  let { type, difficulty, question, correct_answer, incorrect_answers } =
+    domandaCorrente;
+  let titolo = document.querySelector(".qea .question");
+  let bottoni = document.querySelector(".qea .buttons");
+  bottoni.innerHTML = "";
+  titolo.textContent = question;
+  let risposteCompleto = incorrect_answers;
+  risposteCompleto.push(correct_answer);
+
+  if (type != "boolean") {
+    risposteCompleto = shuffle(risposteCompleto);
+  }
+
+  for (let risposta of risposteCompleto) {
+    let button = document.createElement("button");
+    button.textContent = risposta;
+    button.classList.add("button-answer");
+    button.addEventListener("click", function () {
+      if (domande.length > contatore) {
+        contatore++;
+
+        if (incorrect_answers.includes(risposta)) {
+          risposteSbagliate.push(domandaCorrente);
+        }
+        createButtons();
+      } else {
+      }
+    });
+    bottoni.append(button);
+  }
+}
+
+function shuffle(array) {
+  let newArr = [];
+  let length = array.length;
+  for (let i = 0; i < length; i++) {
+    let rand = Math.floor(Math.random() * array.length);
+    newArr.push(array[rand]);
+    array.splice(rand, 1);
+  }
+  return newArr;
+}
+
+init();
+
+//Timer
+// let timer = document.querySelector(".timer");
+// let upSec = document.createElement("p");
+// let clock = document.createElement("div");
+// let remain = document.createElement("p");
+// upSec.setAttribute("class", "upSec");
+// clock.setAttribute("class", "clock");
+// remain.setAttribute("class", "remain");
+// upSec.textContent = "SECONDS";
+// remain.textContent = "remaining";
+// timer.append(upSec);
+// timer.append(clock);
+// timer.append(remain);
+// but.addEventListener("click", function countdown() {
+//   let seconds = 5;
+//   let countdown = setInterval(function () {
+//     if (seconds < 0) {
+//       seconds = 5 + 1;
+//     } else {
+//       clock.textContent = seconds;
+//     }
+//     seconds--;
+//   }, 1000);
+// });
+//indice di domande
+let counter = document.querySelector(".counter");
+let pCounter = document.createElement("p");
+pCounter.setAttribute("class", "pcounter");
+pCounter.innerHTML = "QUESTION 1/10";
+counter.append(pCounter);
 
 /* let n = [1, 2, 3, 4];
 function shuffle(array) {
