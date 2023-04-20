@@ -38,7 +38,7 @@
 
 let p = document.createElement("p");
 let box = document.createElement("input");
-box.setAttribute("type", "checkbox", "class", "cbox");
+box.setAttribute("type", "checkbox","id", "btn", "class", "cbox");
 p.innerHTML =
   "<span>I promise to answer myself without help from anyone</span>";
 let check = document.querySelector(".checkbox");
