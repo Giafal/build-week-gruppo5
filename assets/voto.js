@@ -57,3 +57,14 @@ let rateBut = document.createElement('button');
 rateBut.setAttribute('class','rateBut');
 rateBut.textContent = 'RATE US';
 rate.appendChild(rateBut);
+
+rateBut.addEventListener('click', function(){
+    let results = document.querySelector('.results');
+    results.style.display = 'none';
+    feedback.style.display = 'block';
+}
+);
+
+
+// Stelle
+
