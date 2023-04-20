@@ -58,7 +58,7 @@ span {
   border: 2px solid white;
 }
 
-.button {
+.button button{
   margin-left: 180px;
   padding: 20px 60px;
   font-size: 27px;
