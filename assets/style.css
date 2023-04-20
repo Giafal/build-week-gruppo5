@@ -75,3 +75,8 @@ span{
 .benchmark {
     display: none;
 }
+
+.counter{
+    text-align: center;
+    color: white;
+}
