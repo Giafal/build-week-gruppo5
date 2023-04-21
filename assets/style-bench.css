@@ -24,6 +24,10 @@
     margin-left: 40px;
 }
 
+.button-answer:active{
+   background-color: #900080;
+}
+
 .pressed{
     background-color: #900080
 }
