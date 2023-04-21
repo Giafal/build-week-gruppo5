@@ -217,7 +217,7 @@ function setCircleDasharray() {
 let results = document.querySelector(".results");
 
 let resText = document.querySelector(".resText");
-let resH3 = document.createElement("h3");
+let resH4 = document.createElement("h4");
 let resP = document.createElement("p");
 resH3.textContent = "Results";
 resP.textContent = "The summary of your answers:";
