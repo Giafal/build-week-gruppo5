@@ -1,14 +1,22 @@
 /* background pagine */
 
+.scatola{
+ padding: 10%;
+ 
+}
+
+
 .container {
+  
   font-family: "Inter", sans-serif;
   background-image: url("img/bg.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
-  height: 100vh;
-  width: 100vw;
+  /*height: 100vh;
+  width: 100vw;*/
   color: white;
+  
 }
 
 .welcome {
@@ -85,3 +93,4 @@ span {
 .counter {
   text-align: center;
 }
+
