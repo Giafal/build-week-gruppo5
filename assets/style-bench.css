@@ -43,35 +43,35 @@
 }
 
 /* Sezione Timer */
-
+.benchmark{
+  position:relative;
+}
 .timer {
-  font-family: sans-serif;
-  display: grid;
-  height: 100vh;
-  place-items: center;
+  position: absolute;
+  right:60px;
+  top: -260px;
+}
+.base-timer {
+  position: relative;
+  width: 300px;
+  height: 300px;
 }
 
-.base-timer {
-    position: relative;
-    width: 300px;
-    height: 300px;
-  }
-  
-.base-timersvg {
+.base-timer__svg {
   transform: scaleX(-1);
 }
-  
-.base-timercircle {
+
+.base-timer__circle {
   fill: none;
   stroke: none;
 }
-  
-.base-timerpath-elapsed {
-   stroke-width: 10px;
+
+.base-timer__path-elapsed {
+  stroke-width: 7px;
   stroke: grey;
 }
-  
-.base-timerpath-remaining {
+
+.base-timer__path-remaining {
   stroke-width: 7px;
   stroke-linecap: round;
   transform: rotate(90deg);
@@ -79,24 +79,15 @@
   transition: 1s linear all;
   fill-rule: nonzero;
   stroke: currentColor;
+  color:red;
 }
-  
-.base-timerpath-remaining.green {
-  color: rgb(65, 184, 131);
-}
-  
-.base-timerpath-remaining.orange {
-  color: orange;
-}
-  
-.base-timerpath-remaining.red {
-  color: red;
-}
-  
-.base-timerlabel {
-   position: absolute;
-  width: 100px;
-  height: 100px;
+
+
+
+.base-timer__label {
+  position: absolute;
+  width: 300px;
+  height: 300px;
   top: 0;
   display: flex;
   align-items: center;

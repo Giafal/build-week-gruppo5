@@ -51,15 +51,6 @@ let but = document.createElement("button");
 but.innerHTML = "proceed";
 let button = document.querySelector(".button");
 button.appendChild(but);
-but.addEventListener("click", function nextPage() {
-  if (box.checked == true) {
-    let welcome = document.querySelector(".welcome");
-    let benchmark = document.querySelector(".benchmark");
-    welcome.innerHTML = "";
-    benchmark.style.display = "block";
-    startTimer();
-  }
-});
 
 // Benchmark Page
 let contatore = 0;
@@ -73,8 +64,16 @@ async function init() {
   domande = await fetch(apiURL).then((res) => res.json());
   domande = shuffle(domande.results);
 
+  console.log(domande);
+
   but.addEventListener("click", function () {
-    createButtons();
+    if (box.checked == true) {
+      let welcome = document.querySelector(".welcome");
+      let benchmark = document.querySelector(".benchmark");
+      welcome.innerHTML = "";
+      benchmark.style.display = "block";
+      createButtons();
+    }
   });
 }
 
@@ -82,7 +81,6 @@ let counter = document.querySelector(".counter");
 let pCounter = document.createElement("p");
 pCounter.setAttribute("class", "pcounter");
 
-  
 counter.append(pCounter);
 
 function createButtons() {
@@ -95,7 +93,7 @@ function createButtons() {
   titolo.textContent = question;
   let risposteCompleto = incorrect_answers;
   risposteCompleto.push(correct_answer);
-  
+
   if (type != "boolean") {
     risposteCompleto = shuffle(risposteCompleto);
   }
@@ -103,16 +101,7 @@ function createButtons() {
   for (let risposta of risposteCompleto) {
     let button = document.createElement("button");
     button.classList.add("button-answer");
-    button.textContent = risposta;
-    button.addEventListener('mousedown', function (){
-      button.classList.add('pressed');
-    });
-    button.addEventListener("mouseup", function () {
-      button.classList.remove('pressed');
-    });
-    button.addEventListener('mouseleave',function(){
-      button.classList.remove('pressed');
-    })
+    button.textContent = risposta.replaceAll("$quot;", "");
     button.addEventListener("click", function () {
       if (contatore < domande.length) {
         contatore++;
@@ -121,15 +110,18 @@ function createButtons() {
         }
         createButtons();
       } else {
+        //passa
       }
     });
     bottoni.append(button);
   }
-  pCounter.innerHTML= 'question '+ (contatore + 1) + '/10';
+  pCounter.innerHTML = "question " + (contatore + 1) + "/10";
+  startTimer();
 }
 
 function shuffle(array) {
   let newArr = [];
+  array = [...array];
   let length = array.length;
   for (let i = 0; i < length; i++) {
     let rand = Math.floor(Math.random() * array.length);
@@ -144,28 +136,10 @@ init();
 //Timer
 
 const FULL_DASH_ARRAY = 283;
-const WARNING_THRESHOLD = 10;
-const ALERT_THRESHOLD = 5;
 
-const COLOR_CODES = {
-  info: {
-    color: "green"
-  },
-  warning: {
-    color: "orange",
-    threshold: WARNING_THRESHOLD
-  },
-  alert: {
-    color: "red",
-    threshold: ALERT_THRESHOLD
-  }
-};
-
-const TIME_LIMIT = 5;
-let timePassed = 0;
+const TIME_LIMIT = 20;
 let timeLeft = TIME_LIMIT;
 let timerInterval = null;
-let remainingPathColor = COLOR_CODES.info.color;
 
 document.querySelector(".timer").innerHTML = `
 <div class="base-timer">
@@ -175,7 +149,7 @@ document.querySelector(".timer").innerHTML = `
       <path
         id="base-timer-path-remaining"
         stroke-dasharray="283"
-        class="base-timer__path-remaining ${remainingPathColor}"
+        class="base-timer__path-remaining "
         d="
           M 50, 50
           m -45, 0
@@ -191,29 +165,24 @@ document.querySelector(".timer").innerHTML = `
 </div>
 `;
 
-function onTimesUp() {
-  clearInterval(timerInterval);
-}
-
 function startTimer() {
+  clearInterval(timerInterval);
+  timeLeft = TIME_LIMIT;
   timerInterval = setInterval(() => {
-    timePassed = timePassed += 1;
-    timeLeft = TIME_LIMIT - timePassed;
-    document.getElementById("base-timer-label").innerHTML = formatTime(
-      timeLeft
-    );
+    document.getElementById("base-timer-label").innerHTML =
+      formatTime(timeLeft);
     setCircleDasharray();
-    setRemainingPathColor(timeLeft);
 
     if (timeLeft === 0) {
-      onTimesUp();
+      contatore++;
       createButtons();
+    } else {
+      timeLeft--;
     }
   }, 1000);
 }
 
 function formatTime(time) {
-  const minutes = Math.floor(time / 60);
   let seconds = time % 60;
 
   if (seconds < 10) {
@@ -221,25 +190,6 @@ function formatTime(time) {
   }
 
   return `${seconds}`;
-}
-
-function setRemainingPathColor(timeLeft) {
-  const { alert, warning, info } = COLOR_CODES;
-  if (timeLeft <= alert.threshold) {
-    document
-      .getElementById("base-timer-path-remaining")
-      .classList.remove(warning.color);
-    document
-      .getElementById("base-timer-path-remaining")
-      .classList.add(alert.color);
-  } else if (timeLeft <= warning.threshold) {
-    document
-      .getElementById("base-timer-path-remaining")
-      .classList.remove(info.color);
-    document
-      .getElementById("base-timer-path-remaining")
-      .classList.add(warning.color);
-  }
 }
 
 function calculateTimeFraction() {
@@ -268,7 +218,6 @@ function setCircleDasharray() {
 // let timePassed = 0;
 // let timeLeft = timeLimit;
 
-
 // document.querySelector('.timer').innerHTML = `
 // <div class="base-timer">
 //   <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -293,8 +242,6 @@ function setCircleDasharray() {
 // </div>
 // `;
 
-
-
 // function formatTimeLeft(time){
 //   let seconds = time % 60;
 //   if (seconds < 10) {
@@ -302,7 +249,6 @@ function setCircleDasharray() {
 //   }
 //   return `${seconds}`;
 // }
-
 
 // let timerInterval = null;
 
@@ -358,69 +304,68 @@ function setCircleDasharray() {
 // });
 //indice di domande
 
-let resText = document.querySelector('.resText');
-let resH3 = document.createElement('h3');
-let resP = document.createElement('p');
-resH3.textContent = 'Results';
-resP.textContent = 'The summary of your answers:';
+let resText = document.querySelector(".resText");
+let resH3 = document.createElement("h3");
+let resP = document.createElement("p");
+resH3.textContent = "Results";
+resP.textContent = "The summary of your answers:";
 resText.appendChild(resH3);
 resText.appendChild(resP);
 
-let summary = document.querySelector('.summary');
-let rightP1 = document.createElement('p');
-rightP1.setAttribute('class','rightP');
-let rightP2 = document.createElement('p');
-rightP2.setAttribute('class','rightP');
-let rightP3 = document.createElement('p');
-rightP3.setAttribute('class','rightP');
-rightP1.textContent= 'Correct';
-rightP2.textContent = '%';
-rightP3.textContent = 'questions';
+let summary = document.querySelector(".summary");
+let rightP1 = document.createElement("p");
+rightP1.setAttribute("class", "rightP");
+let rightP2 = document.createElement("p");
+rightP2.setAttribute("class", "rightP");
+let rightP3 = document.createElement("p");
+rightP3.setAttribute("class", "rightP");
+rightP1.textContent = "Correct";
+rightP2.textContent = "%";
+rightP3.textContent = "questions";
 summary.appendChild(rightP1);
 summary.appendChild(rightP2);
 summary.appendChild(rightP3);
 
-let percentage = document.querySelector('.percent');
-let percP1 = document.createElement('p');
-percP1.setAttribute('class', 'percP');
-let percP2 = document.createElement('p');
-percP2.setAttribute('class', 'percP');
-let percP3 = document.createElement('p');
-percP3.setAttribute('class', 'percP');
-let percP4 = document.createElement('p');
-percP4.setAttribute('class', 'percP');
-percP1.textContent = 'Congratulations';
-percP2.textContent = 'You passed the exam.';
-percP3.textContent = 'We\' ll send you the certificate in a few minutes.';
-percP4.textContent = 'Check your email (including promotion/spam folder)';
+let percentage = document.querySelector(".percent");
+let percP1 = document.createElement("p");
+percP1.setAttribute("class", "percP");
+let percP2 = document.createElement("p");
+percP2.setAttribute("class", "percP");
+let percP3 = document.createElement("p");
+percP3.setAttribute("class", "percP");
+let percP4 = document.createElement("p");
+percP4.setAttribute("class", "percP");
+percP1.textContent = "Congratulations";
+percP2.textContent = "You passed the exam.";
+percP3.textContent = "We' ll send you the certificate in a few minutes.";
+percP4.textContent = "Check your email (including promotion/spam folder)";
 percentage.appendChild(percP1);
 percentage.appendChild(percP2);
 percentage.appendChild(percP3);
 percentage.appendChild(percP4);
 
-let wrong = document.querySelector('.wrong');
-let wrongP1 = document.createElement('p');
-wrongP1.setAttribute('class','wrongP');
-let wrongP2 = document.createElement('p');
-wrongP2.setAttribute('class','wrongP');
-let wrongP3 = document.createElement('p');
-wrongP3.setAttribute('class','wrongP');
-wrongP1.textContent= 'Wrong';
-wrongP2.textContent = '%';
-wrongP3.textContent = 'questions';
+let wrong = document.querySelector(".wrong");
+let wrongP1 = document.createElement("p");
+wrongP1.setAttribute("class", "wrongP");
+let wrongP2 = document.createElement("p");
+wrongP2.setAttribute("class", "wrongP");
+let wrongP3 = document.createElement("p");
+wrongP3.setAttribute("class", "wrongP");
+wrongP1.textContent = "Wrong";
+wrongP2.textContent = "%";
+wrongP3.textContent = "questions";
 wrong.appendChild(wrongP1);
 wrong.appendChild(wrongP2);
 wrong.appendChild(wrongP3);
 
-let rate = document.querySelector('.rate');
-let rateBut = document.createElement('button');
-rateBut.setAttribute('class','rateBut');
-rateBut.textContent = 'RATE US';
+let rate = document.querySelector(".rate");
+let rateBut = document.createElement("button");
+rateBut.setAttribute("class", "rateBut");
+rateBut.textContent = "RATE US";
 rate.appendChild(rateBut);
 
-rateBut.addEventListener('click', function(){
-    let results = document.querySelector('.results');
-    results.style.display = 'none';
-    feedback.style.display = 'block';
-}
-);
+rateBut.addEventListener("click", function () {
+  let results = document.querySelector(".results");
+  results.style.display = "none";
+  feedback.style.display = "block";
+});
