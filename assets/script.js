@@ -57,6 +57,8 @@ let contatore = 0;
 let domande;
 let domandaCorrente;
 let risposteSbagliate = [];
+let risposteEsatte = [];
+let risposteCompleto = [];
 
 async function init() {
   let apiURL =
@@ -83,6 +85,7 @@ pCounter.setAttribute("class", "pcounter");
 
 counter.append(pCounter);
 
+let benchmark = document.querySelector(".benchmark");
 function createButtons() {
   domandaCorrente = domande[contatore];
   let { type, difficulty, question, correct_answer, incorrect_answers } =
@@ -91,7 +94,7 @@ function createButtons() {
   let bottoni = document.querySelector(".qea .buttons");
   bottoni.innerHTML = "";
   titolo.textContent = question;
-  let risposteCompleto = incorrect_answers;
+  risposteCompleto = incorrect_answers;
   risposteCompleto.push(correct_answer);
 
   if (type != "boolean") {
@@ -103,14 +106,17 @@ function createButtons() {
     button.classList.add("button-answer");
     button.textContent = risposta.replaceAll("$quot;", "");
     button.addEventListener("click", function () {
-      if (contatore < domande.length) {
+      if (contatore <= domande.length) {
         contatore++;
         if (incorrect_answers.includes(risposta)) {
           risposteSbagliate.push(domandaCorrente);
+        } else {
+          risposteEsatte.push(domandaCorrente);
         }
         createButtons();
       } else {
-        //passa
+        benchmark.innerHTML = "";
+        results.style.display = "block";
       }
     });
     bottoni.append(button);
@@ -137,7 +143,7 @@ init();
 
 const FULL_DASH_ARRAY = 283;
 
-const TIME_LIMIT = 20;
+const TIME_LIMIT = 30;
 let timeLeft = TIME_LIMIT;
 let timerInterval = null;
 
@@ -206,103 +212,9 @@ function setCircleDasharray() {
     .setAttribute("stroke-dasharray", circleDasharray);
 }
 
-// const fullDashArray = 283;
-// const colorCodes = {
-//   info: {
-//     color: "aqua"
-//   },
-// };
-// let remainingPathColor = colorCodes.info.color;
-
-// const timeLimit = 5;
-// let timePassed = 0;
-// let timeLeft = timeLimit;
-
-// document.querySelector('.timer').innerHTML = `
-// <div class="base-timer">
-//   <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-//     <g class="base-timer__circle">
-//       <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
-//       <path
-//         id="base-timer-path-remaining"
-//         stroke-dasharray="283"
-//         class="base-timer__path-remaining ${remainingPathColor}"
-//         d="
-//           M 50, 50
-//           m -45, 0
-//           a 45,45 0 1,0 90,0
-//           a 45,45 0 1,0 -90,0
-//         "
-//       ></path>
-//       </g>
-//   </svg>
-//   <span id="base-timer-label" class="base-timer_label">
-//     ${formatTimeLeft(timeLeft)}
-//   </span>
-// </div>
-// `;
-
-// function formatTimeLeft(time){
-//   let seconds = time % 60;
-//   if (seconds < 10) {
-//     seconds = `0${seconds}`;
-//   }
-//   return `${seconds}`;
-// }
-
-// let timerInterval = null;
-
-// function startTimer() {
-//   timerInterval = setInterval(() => {
-//     timePassed = timePassed += 1;
-//     timeLeft = timeLimit - timePassed;
-//     document.querySelector('#base-timer-label').innerHTML = formatTime(timeLeft);
-//     setCircleDasharray();
-//       if(timeLeft === 0){
-//         createButtons();
-//       }
-//     },1000);
-//   }
-
-// function calculateTimeFraction() {
-//   const rawTimeFraction = timeLeft / timeLimit;
-//   return rawTimeFraction - (1 / timeLimit) * (1 - rawTimeFraction);
-// }
-
-// function setCircleDasharray() {
-//   const circleDasharray = `${(
-//     calculateTimeFraction() * fullDashArray
-//   ).toFixed(0)} 283`;
-//   document
-//     .querySelector("#base-timer-path-remaining")
-//     .setAttribute("stroke-dasharray", circleDasharray);
-// }
-
-//Timer
-// let timer = document.querySelector(".timer");
-// let upSec = document.createElement("p");
-// let clock = document.createElement("div");
-// let remain = document.createElement("p");
-// upSec.setAttribute("class", "upSec");
-// clock.setAttribute("class", "clock");
-// remain.setAttribute("class", "remain");
-// upSec.textContent = "SECONDS";
-// remain.textContent = "remaining";
-// timer.append(upSec);
-// timer.append(clock);
-// timer.append(remain);
-// but.addEventListener("click", function countdown() {
-//   let seconds = 5;
-//   let countdown = setInterval(function () {
-//     if (seconds < 0) {
-//       seconds = 5 + 1;
-//     } else {
-//       clock.textContent = seconds;
-//     }
-//     seconds--;
-//   }, 1000);
-// });
 //indice di domande
+
+let results = document.querySelector(".results");
 
 let resText = document.querySelector(".resText");
 let resH3 = document.createElement("h3");
@@ -320,8 +232,10 @@ rightP2.setAttribute("class", "rightP");
 let rightP3 = document.createElement("p");
 rightP3.setAttribute("class", "rightP");
 rightP1.textContent = "Correct";
-rightP2.textContent = "%";
-rightP3.textContent = "questions";
+rightP2.textContent =
+  (risposteEsatte.length * risposteCompleto.length) / 100 + "%";
+rightP3.textContent =
+  risposteEsatte.length + "/" + risposteCompleto.length + "questions";
 summary.appendChild(rightP1);
 summary.appendChild(rightP2);
 summary.appendChild(rightP3);
