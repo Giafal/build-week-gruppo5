@@ -57,7 +57,6 @@ but.addEventListener("click", function nextPage() {
     let benchmark = document.querySelector(".benchmark");
     welcome.innerHTML = "";
     benchmark.style.display = "block";
-    startTimer();
   }
 });
 
@@ -143,14 +142,31 @@ init();
 
 //Timer
 
-const fullDashArray = 283;
+const FULL_DASH_ARRAY = 283;
+const WARNING_THRESHOLD = 10;
+const ALERT_THRESHOLD = 5;
+
 const COLOR_CODES = {
   info: {
-    color: "aqua"
+    color: "green"
   },
+  warning: {
+    color: "orange",
+    threshold: WARNING_THRESHOLD
+  },
+  alert: {
+    color: "red",
+    threshold: ALERT_THRESHOLD
+  }
 };
 
-document.querySelector('.timer').innerHTML = `
+const TIME_LIMIT = 20;
+let timePassed = 0;
+let timeLeft = TIME_LIMIT;
+let timerInterval = null;
+let remainingPathColor = COLOR_CODES.info.color;
+
+document.querySelector(".timer").innerHTML = `
 <div class="base-timer">
   <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
     <g class="base-timer__circle">
@@ -166,42 +182,65 @@ document.querySelector('.timer').innerHTML = `
           a 45,45 0 1,0 -90,0
         "
       ></path>
-      </g>
+    </g>
   </svg>
-  <span id="base-timer-label" class="base-timer_label">
-    ${formatTimeLeft(timeLeft)}
-  </span>
+  <span id="base-timer-label" class="base-timer__label">${formatTime(
+    timeLeft
+  )}</span>
 </div>
 `;
 
+startTimer();
 
-
-function formatTimeLeft(time){
-  let seconds = time % 60;
-  if (seconds < 10) {
-    seconds = "0" + seconds;
-  }
-  return seconds;
+function onTimesUp() {
+  clearInterval(timerInterval);
 }
-
-const timeLimit = 5;
-let timePassed = 0;
-let timeLeft = timeLimit;
-
-let timerInterval = null;
-document.querySelector('.timer').innerHTML= `...`;
 
 function startTimer() {
   timerInterval = setInterval(() => {
-    timePassed++;
-    timeLeft = timeLimit - timePassed;
-    document.querySelector('.timer').innerHTML = formatTime(timeLeft);
-    },1000);
-    if(timeLeft === 0){
-      createButtons();
-      startTimer();
+    timePassed = timePassed += 1;
+    timeLeft = TIME_LIMIT - timePassed;
+    document.getElementById("base-timer-label").innerHTML = formatTime(
+      timeLeft
+    );
+    setCircleDasharray();
+    setRemainingPathColor(timeLeft);
+
+    if (timeLeft === 0) {
+      onTimesUp();
     }
-};
+  }, 1000);
+}
+
+function formatTime(time) {
+  const minutes = Math.floor(time / 60);
+  let seconds = time % 60;
+
+  if (seconds < 10) {
+    seconds = `0${seconds}`;
+  }
+
+  return `${minutes}:${seconds}`;
+}
+
+function setRemainingPathColor(timeLeft) {
+  const { alert, warning, info } = COLOR_CODES;
+  if (timeLeft <= alert.threshold) {
+    document
+      .getElementById("base-timer-path-remaining")
+      .classList.remove(warning.color);
+    document
+      .getElementById("base-timer-path-remaining")
+      .classList.add(alert.color);
+  } else if (timeLeft <= warning.threshold) {
+    document
+      .getElementById("base-timer-path-remaining")
+      .classList.remove(info.color);
+    document
+      .getElementById("base-timer-path-remaining")
+      .classList.add(warning.color);
+  }
+}
 
 function calculateTimeFraction() {
   const rawTimeFraction = timeLeft / TIME_LIMIT;
@@ -213,9 +252,85 @@ function setCircleDasharray() {
     calculateTimeFraction() * FULL_DASH_ARRAY
   ).toFixed(0)} 283`;
   document
-    .querySelector("#base-timer-path-remaining")
+    .getElementById("base-timer-path-remaining")
     .setAttribute("stroke-dasharray", circleDasharray);
 }
+
+// const fullDashArray = 283;
+// const colorCodes = {
+//   info: {
+//     color: "aqua"
+//   },
+// };
+// let remainingPathColor = colorCodes.info.color;
+
+// const timeLimit = 5;
+// let timePassed = 0;
+// let timeLeft = timeLimit;
+
+
+// document.querySelector('.timer').innerHTML = `
+// <div class="base-timer">
+//   <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+//     <g class="base-timer__circle">
+//       <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
+//       <path
+//         id="base-timer-path-remaining"
+//         stroke-dasharray="283"
+//         class="base-timer__path-remaining ${remainingPathColor}"
+//         d="
+//           M 50, 50
+//           m -45, 0
+//           a 45,45 0 1,0 90,0
+//           a 45,45 0 1,0 -90,0
+//         "
+//       ></path>
+//       </g>
+//   </svg>
+//   <span id="base-timer-label" class="base-timer_label">
+//     ${formatTimeLeft(timeLeft)}
+//   </span>
+// </div>
+// `;
+
+
+
+// function formatTimeLeft(time){
+//   let seconds = time % 60;
+//   if (seconds < 10) {
+//     seconds = `0${seconds}`;
+//   }
+//   return `${seconds}`;
+// }
+
+
+// let timerInterval = null;
+
+// function startTimer() {
+//   timerInterval = setInterval(() => {
+//     timePassed = timePassed += 1;
+//     timeLeft = timeLimit - timePassed;
+//     document.querySelector('#base-timer-label').innerHTML = formatTime(timeLeft);
+//     setCircleDasharray();
+//       if(timeLeft === 0){
+//         createButtons();
+//       }
+//     },1000);
+//   }
+
+// function calculateTimeFraction() {
+//   const rawTimeFraction = timeLeft / timeLimit;
+//   return rawTimeFraction - (1 / timeLimit) * (1 - rawTimeFraction);
+// }
+
+// function setCircleDasharray() {
+//   const circleDasharray = `${(
+//     calculateTimeFraction() * fullDashArray
+//   ).toFixed(0)} 283`;
+//   document
+//     .querySelector("#base-timer-path-remaining")
+//     .setAttribute("stroke-dasharray", circleDasharray);
+// }
 
 //Timer
 // let timer = document.querySelector(".timer");
@@ -258,7 +373,7 @@ let rightP2 = document.createElement('p');
 rightP2.setAttribute('class','rightP');
 let rightP3 = document.createElement('p');
 rightP3.setAttribute('class','rightP');
-rirightP1.textContent= 'Correct';
+rightP1.textContent= 'Correct';
 rightP2.textContent = '%';
 rightP3.textContent = 'questions';
 summary.appendChild(rightP1);
