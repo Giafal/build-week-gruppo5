@@ -57,6 +57,7 @@ but.addEventListener("click", function nextPage() {
     let benchmark = document.querySelector(".benchmark");
     welcome.innerHTML = "";
     benchmark.style.display = "block";
+    startTimer();
   }
 });
 
@@ -139,6 +140,82 @@ function shuffle(array) {
 }
 
 init();
+
+//Timer
+
+const fullDashArray = 283;
+const COLOR_CODES = {
+  info: {
+    color: "aqua"
+  },
+};
+
+document.querySelector('.timer').innerHTML = `
+<div class="base-timer">
+  <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <g class="base-timer__circle">
+      <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
+      <path
+        id="base-timer-path-remaining"
+        stroke-dasharray="283"
+        class="base-timer__path-remaining ${remainingPathColor}"
+        d="
+          M 50, 50
+          m -45, 0
+          a 45,45 0 1,0 90,0
+          a 45,45 0 1,0 -90,0
+        "
+      ></path>
+      </g>
+  </svg>
+  <span id="base-timer-label" class="base-timer_label">
+    ${formatTimeLeft(timeLeft)}
+  </span>
+</div>
+`;
+
+
+
+function formatTimeLeft(time){
+  let seconds = time % 60;
+  if (seconds < 10) {
+    seconds = "0" + seconds;
+  }
+  return seconds;
+}
+
+const timeLimit = 5;
+let timePassed = 0;
+let timeLeft = timeLimit;
+
+let timerInterval = null;
+document.querySelector('.timer').innerHTML= `...`;
+
+function startTimer() {
+  timerInterval = setInterval(() => {
+    timePassed++;
+    timeLeft = timeLimit - timePassed;
+    document.querySelector('.timer').innerHTML = formatTime(timeLeft);
+    },1000);
+    if(timeLeft === 0){
+      createButtons();
+      startTimer();
+    }
+};
+
+function calculateTimeFraction() {
+  const rawTimeFraction = timeLeft / TIME_LIMIT;
+  return rawTimeFraction - (1 / TIME_LIMIT) * (1 - rawTimeFraction);
+}
+
+function setCircleDasharray() {
+  const circleDasharray = `${(
+    calculateTimeFraction() * FULL_DASH_ARRAY
+  ).toFixed(0)} 283`;
+  document
+    .querySelector("#base-timer-path-remaining")
+    .setAttribute("stroke-dasharray", circleDasharray);
+}
 
 //Timer
 // let timer = document.querySelector(".timer");
