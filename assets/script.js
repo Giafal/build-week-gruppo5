@@ -57,6 +57,7 @@ but.addEventListener("click", function nextPage() {
     let benchmark = document.querySelector(".benchmark");
     welcome.innerHTML = "";
     benchmark.style.display = "block";
+    startTimer();
   }
 });
 
@@ -160,7 +161,7 @@ const COLOR_CODES = {
   }
 };
 
-const TIME_LIMIT = 20;
+const TIME_LIMIT = 5;
 let timePassed = 0;
 let timeLeft = TIME_LIMIT;
 let timerInterval = null;
@@ -190,8 +191,6 @@ document.querySelector(".timer").innerHTML = `
 </div>
 `;
 
-startTimer();
-
 function onTimesUp() {
   clearInterval(timerInterval);
 }
@@ -208,6 +207,7 @@ function startTimer() {
 
     if (timeLeft === 0) {
       onTimesUp();
+      createButtons();
     }
   }, 1000);
 }
@@ -220,7 +220,7 @@ function formatTime(time) {
     seconds = `0${seconds}`;
   }
 
-  return `${minutes}:${seconds}`;
+  return `${seconds}`;
 }
 
 function setRemainingPathColor(timeLeft) {
