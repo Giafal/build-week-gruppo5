@@ -39,22 +39,23 @@
 }
 
 .counter{
-    margin-top: 200px;
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
 /* Sezione Timer */
+
 .benchmark{
-  position:relative;
+  position: relative;
 }
 .timer {
   position: absolute;
-  right:60px;
+  right: 60px;
   top: -260px;
+  
 }
 .base-timer {
-  position: relative;
-  width: 300px;
-  height: 300px;
+    width: 200px;
 }
 
 .base-timer__svg {
@@ -79,15 +80,13 @@
   transition: 1s linear all;
   fill-rule: nonzero;
   stroke: currentColor;
-  color:red;
+  color: aqua;
 }
-
-
 
 .base-timer__label {
   position: absolute;
-  width: 300px;
-  height: 300px;
+  width: 200px;
+  height: 200px;
   top: 0;
   display: flex;
   align-items: center;

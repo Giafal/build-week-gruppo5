@@ -1,8 +1,8 @@
 /* background pagine */
 
 .scatola{
- padding: 10%;
- 
+margin: 10%;
+
 }
 
 
@@ -13,9 +13,8 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
-  /*height: 100vh;
-  width: 100vw;*/
   color: white;
+  
   
 }
 
@@ -27,7 +26,7 @@
   width: 180px;
   height: 50px;
   padding-left: 100px;
-  margin-bottom: 100px;
+  margin-bottom: 80px;
   margin-top: 60px;
 }
 
@@ -51,7 +50,7 @@ p {
 
 ul {
   margin-left: 20px;
-  margin-bottom: 110px;
+  margin-bottom: 80px;
   line-height: 25px;
 }
 
@@ -76,6 +75,7 @@ span {
   font-weight: bolder;
   background-color: #00ffff;
   box-shadow: 0 0 25px #00ffff;
+  margin-bottom: 100px;
 }
 
 .button :hover {
@@ -92,5 +92,6 @@ span {
 
 .counter {
   text-align: center;
+  
 }
 
